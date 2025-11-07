@@ -1,0 +1,2519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ilinza - Marketplace Ecuador</title>
+    <style>
+        :root {
+            --color-primary: #000000;
+            --color-secondary: #1a1a1a;
+            --color-accent: #0066cc;
+            --color-accent-hover: #0052a3;
+            --color-background: #f8f9fa;
+            --color-surface: #FFFFFF;
+            --color-text: #1a1a2e;
+            --color-text-light: #6c757d;
+            --color-border: #e0e0e0;
+            --color-success: #27AE60;
+            --color-warning: #F39C12;
+            --color-danger: #E74C3C;
+            --color-gold: #d4af37;
+            --color-accent-light: #bbe1fa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--color-background);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background-color: #131921;
+            color: white;
+            padding: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 8px 16px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            letter-spacing: 2px;
+        }
+
+        .logo span {
+            color: var(--color-accent);
+        }
+
+        .search-bar {
+            flex: 1;
+            display: flex;
+            max-width: 600px;
+            min-width: 200px;
+        }
+
+        .search-bar input {
+            flex: 1;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 0;
+            font-size: 14px;
+        }
+        
+        .search-bar select {
+            padding: 10px 12px;
+            border: none;
+            border-radius: 4px 0 0 4px;
+            font-size: 12px;
+            background-color: #f3f3f3;
+            cursor: pointer;
+            min-width: 50px;
+            max-width: 60px;
+        }
+
+        .search-bar button {
+            padding: 10px 16px;
+            background-color: #febd69;
+            color: #111;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .search-bar button:hover {
+            background-color: #f3a847;
+        }
+
+        .search-bar button:hover {
+            background-color: var(--color-accent-hover);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .header-link {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.3s;
+        }
+
+        .header-link:hover {
+            color: var(--color-accent);
+        }
+
+        .header-link span {
+            font-weight: 600;
+        }
+
+        .cart-badge {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--color-accent);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        /* Navigation */
+        .nav {
+            background-color: var(--color-secondary);
+            padding: 12px 40px;
+            overflow-x: auto;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            list-style: none;
+            white-space: nowrap;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-accent);
+        }
+
+        /* Splash Screen */
+        .splash-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #000000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            animation: fadeOut 0.8s ease-out 3s forwards;
+        }
+
+        .splash-screen.hidden {
+            display: none;
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+        .splash-content {
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .splash-title {
+            font-size: 96px;
+            font-weight: 700;
+            letter-spacing: 8px;
+            margin-bottom: 20px;
+            color: #FFFFFF;
+        }
+
+        .splash-slogan {
+            display: none;
+        }
+
+        /* Hero Banner with Mountain Background */
+        .hero-banner {
+            position: relative;
+            height: 100vh;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.8)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080"><defs><linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" style="stop-color:%231a1a2e;stop-opacity:1" /><stop offset="100%" style="stop-color:%230f4c75;stop-opacity:1" /></linearGradient></defs><rect fill="url(%23sky)" width="1920" height="1080"/><path fill="%23ffffff" opacity="0.95" d="M0,800 Q200,600 400,700 T800,650 L960,400 L1120,650 Q1320,700 1520,700 T1920,800 L1920,1080 L0,1080 Z"/><path fill="%23e8f4f8" opacity="0.7" d="M0,820 Q200,620 400,720 T800,670 L960,420 L1120,670 Q1320,720 1520,720 T1920,820 L1920,1080 L0,1080 Z"/><ellipse cx="960" cy="150" rx="80" ry="80" fill="%23ffd700" opacity="0.3"/></svg>');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: white;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.4) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            padding: 40px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-title {
+            font-size: 72px;
+            margin-bottom: 16px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-slogan {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-description {
+            font-size: 18px;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto 32px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .banner-buttons {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .btn-primary {
+            background-color: var(--color-accent);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--color-accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(230, 126, 34, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: white;
+            border-color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1920px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        /* Categories */
+        .categories {
+            background-color: var(--color-surface);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        }
+
+        .categories h2 {
+            font-size: 28px;
+            margin-bottom: 24px;
+            color: var(--color-primary);
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 16px;
+        }
+
+        .category-card {
+            background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-accent-light) 100%);
+            padding: 24px;
+            border-radius: 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .category-card:hover {
+            border-color: var(--color-accent);
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+        }
+
+        .category-icon {
+            font-size: 40px;
+            margin-bottom: 12px;
+        }
+
+        .category-card h3 {
+            font-size: 16px;
+            color: var(--color-text);
+        }
+
+        /* Products */
+        .products-section {
+            margin-bottom: 40px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .section-header h2 {
+            font-size: 28px;
+            color: var(--color-primary);
+        }
+
+        .filter-sort {
+            display: flex;
+            gap: 12px;
+        }
+
+        .filter-sort select {
+            padding: 8px 16px;
+            border: 1px solid var(--color-border);
+            border-radius: 20px;
+            background-color: white;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .product-card {
+            background-color: var(--color-surface);
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border: 1px solid var(--color-border);
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background-color: var(--color-background);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 70px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background-color: var(--color-gold);
+            color: var(--color-primary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+        }
+
+        .product-info {
+            padding: 16px;
+        }
+
+        .product-seller {
+            font-size: 12px;
+            color: var(--color-text-light);
+            margin-bottom: 8px;
+        }
+
+        .product-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--color-text);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .stars {
+            color: var(--color-warning);
+            font-size: 14px;
+        }
+
+        .rating-count {
+            font-size: 13px;
+            color: var(--color-text-light);
+        }
+
+        .product-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 12px;
+        }
+
+        .product-price small {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--color-text-light);
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-add-cart {
+            flex: 1;
+            padding: 10px;
+            background-color: var(--color-accent);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-add-cart:hover {
+            background-color: var(--color-accent-hover);
+        }
+
+        .btn-icon {
+            padding: 10px;
+            background-color: var(--color-background);
+            border: 1px solid var(--color-border);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-icon:hover {
+            background-color: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--color-primary);
+            color: white;
+            padding: 40px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1920px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 16px;
+            font-size: 18px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: var(--color-accent);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 32px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-header h2 {
+            color: var(--color-primary);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--color-text-light);
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            background-color: var(--color-background);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .cart-item-price {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        .cart-total {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 2px solid var(--color-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 40px;
+            color: var(--color-text-light);
+        }            @media (min-width: 1600px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+
+        @media (min-width: 1920px) {
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-top {
+                padding: 12px 20px;
+            }
+
+            .nav {
+                padding: 12px 20px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .hero-banner {
+                min-height: 500px;
+            }
+
+            .hero-title {
+                font-size: 48px;
+            }
+
+            .hero-slogan {
+                font-size: 18px;
+            }
+
+            .hero-description {
+                font-size: 16px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+
+            .category-grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div class="splash-screen" id="splashScreen">
+        <div class="splash-content">
+            <div class="splash-title">ILINZA</div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-top">
+            <a href="#" class="logo">ILINZA</a>
+            
+            <div class="search-bar">
+                <select id="categorySelect" style="padding: 10px 16px; border: none; border-radius: 24px 0 0 24px; font-size: 14px; background-color: #f0f0f0; cursor: pointer; min-width: 150px;">
+                    <option value="all">Todas las categorías</option>
+                    <option value="electronica">Electrónica</option>
+                    <option value="moda">Moda y Ropa</option>
+                    <option value="hogar">Hogar</option>
+                    <option value="deportes">Deportes</option>
+                    <option value="artesanias">Artesanías</option>
+                    <option value="libros">Libros</option>
+                    <option value="juguetes">Juguetes</option>
+                    <option value="automotriz">Automotriz</option>
+                    <option value="salud">Salud</option>
+                    <option value="alimentos">Alimentos</option>
+                    <option value="jardin">Jardín</option>
+                    <option value="mascotas">Mascotas</option>
+                    <option value="oficina">Oficina</option>
+                    <option value="construccion">Construcción</option>
+                    <option value="joyeria">Joyería</option>
+                </select>
+                <input type="text" id="searchInput" placeholder="Buscar productos, marcas y más..." style="border-radius: 0;">
+                <button onclick="searchProducts()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle; margin-right: 4px;"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+                    Buscar
+                </button>
+            </div>
+
+            <div class="header-actions">
+                <a href="#" class="header-link" style="flex-direction: row; gap: 6px; border: 1px solid rgba(255,255,255,0.2); padding: 6px 12px; border-radius: 8px; background-color: rgba(255,255,255,0.05);" onclick="showLocationModal()">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    <div style="text-align: left; line-height: 1.3;">
+                        <div style="font-size: 11px; opacity: 0.8;">Enviar a</div>
+                        <div style="font-size: 13px; font-weight: 600;" id="headerLocationText">Ecuador 170102</div>
+                    </div>
+                </a>
+                
+                <a href="#" class="header-link" onclick="showModal('login')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <span>Mi Cuenta</span>
+                </a>
+                <a href="#" class="header-link cart-badge" onclick="showCart()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                    <span>Carrito</span>
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+            </div>
+        </div>
+
+    </header>
+
+    <!-- Hero Banner with Illinizas Mountain -->
+    <section class="hero-banner" id="heroBanner" style="transition: opacity 0.8s ease-out;">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">ILINZA</h1>
+            <p class="hero-slogan">Born in Ecuador, for the World</p>
+        </div>
+    </section>        <!-- Main Content -->
+    <div class="container">
+        <!-- Ofertas del Día y Productos Recomendados - Banners lado a lado -->
+        <section class="products-section" id="offersSection" style="margin-bottom: 60px; scroll-margin-top: 20px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                <!-- Ofertas del Día -->
+                <div style="background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%); padding: 40px 30px; border-radius: 20px; text-align: center; box-shadow: 0 8px 24px rgba(238, 90, 111, 0.3); position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at top right, rgba(255,255,255,0.1) 0%, transparent 50%); pointer-events: none;"></div>
+                    <h2 style="color: white; font-size: 32px; margin-bottom: 12px; font-weight: 700; position: relative;">⚡ Ofertas del Día</h2>
+                    <p style="color: rgba(255,255,255,0.95); font-size: 16px; margin-bottom: 16px; position: relative;">Hasta 50% de descuento</p>
+                    <div style="color: white; font-weight: 700; font-size: 15px; margin-bottom: 24px; position: relative;">
+                        ⏰ Termina en: <span id="dealsCountdown" style="background-color: rgba(0,0,0,0.2); padding: 6px 12px; border-radius: 12px; display: inline-block;">23:45:12</span>
+                    </div>
+                    <button class="btn btn-primary" style="padding: 12px 32px; font-size: 16px; background-color: white; color: #ee5a6f; font-weight: 700; box-shadow: 0 4px 12px rgba(0,0,0,0.2);" onclick="showAllDeals()">
+                        Ver Todas las Ofertas →
+                    </button>
+                </div>
+                
+                <!-- Productos Recomendados -->
+                <div style="background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%); padding: 40px 30px; border-radius: 20px; text-align: center; box-shadow: 0 8px 24px rgba(0, 102, 204, 0.3); position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at top left, rgba(255,255,255,0.1) 0%, transparent 50%); pointer-events: none;"></div>
+                    <h2 style="color: white; font-size: 32px; margin-bottom: 12px; font-weight: 700; position: relative;">✨ Recomendados para Ti</h2>
+                    <p style="color: rgba(255,255,255,0.95); font-size: 16px; margin-bottom: 16px; position: relative;">Basado en tus búsquedas recientes • IA personalizada</p>
+                    <div style="color: white; font-weight: 600; font-size: 15px; margin-bottom: 24px; position: relative;">
+                        🔍 Última búsqueda: <span style="background-color: rgba(0,0,0,0.2); padding: 6px 12px; border-radius: 12px; display: inline-block;" id="lastSearchText">Electrónica</span>
+                    </div>
+                    <button class="btn btn-primary" style="padding: 12px 32px; font-size: 16px; background-color: white; color: #0066cc; font-weight: 700; box-shadow: 0 4px 12px rgba(0,0,0,0.2);" onclick="showRecommended()">
+                        Ver Recomendaciones →
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Hidden deals grid that was shown before
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        📱
+                        <div class="product-badge" style="background-color: var(--color-danger);">-40% OFF</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-seller">TechStore Ecuador</div>
+                        <div class="product-title">Smartphone Galaxy Pro Max</div>
+                        <div class="product-rating">
+                            <span class="stars">⭐⭐⭐⭐⭐</span>
+                            <span class="rating-count">(1247)</span>
+                        </div>
+                        <div class="product-price">
+                            $539.99
+                            <small style="text-decoration: line-through; color: var(--color-text-light);">$899.99</small>
+                        </div>
+                        <div style="color: var(--color-success); font-size: 13px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 16v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4"></path><polyline points="7 12 12 17 17 12"></polyline><line x1="12" y1="17" x2="12" y2="3"></line></svg>
+                            Llega mañana
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-add-cart" onclick="addToCart(1)">Agregar al Carrito</button>
+                            <button class="btn-icon" title="Favoritos">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        💻
+                        <div class="product-badge" style="background-color: var(--color-danger);">-35% OFF</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-seller">CompuWorld</div>
+                        <div class="product-title">Laptop Gaming RGB 16GB RAM</div>
+                        <div class="product-rating">
+                            <span class="stars">⭐⭐⭐⭐⭐</span>
+                            <span class="rating-count">(856)</span>
+                        </div>
+                        <div class="product-price">
+                            $844.99
+                            <small style="text-decoration: line-through; color: var(--color-text-light);">$1299.99</small>
+                        </div>
+                        <div style="color: var(--color-success); font-size: 13px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 16v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4"></path><polyline points="7 12 12 17 17 12"></polyline><line x1="12" y1="17" x2="12" y2="3"></line></svg>
+                            Entrega en 2 días
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-add-cart" onclick="addToCart(2)">Agregar al Carrito</button>
+                            <button class="btn-icon" title="Favoritos">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        🎧
+                        <div class="product-badge" style="background-color: var(--color-danger);">-50% OFF</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-seller">AudioTech</div>
+                        <div class="product-title">Auriculares Bluetooth Noise Cancelling</div>
+                        <div class="product-rating">
+                            <span class="stars">⭐⭐⭐⭐⭐</span>
+                            <span class="rating-count">(1891)</span>
+                        </div>
+                        <div class="product-price">
+                            $79.99
+                            <small style="text-decoration: line-through; color: var(--color-text-light);">$159.99</small>
+                        </div>
+                        <div style="color: var(--color-success); font-size: 13px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 16v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4"></path><polyline points="7 12 12 17 17 12"></polyline><line x1="12" y1="17" x2="12" y2="3"></line></svg>
+                            Llega hoy
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-add-cart" onclick="addToCart(7)">Agregar al Carrito</button>
+                            <button class="btn-icon" title="Favoritos">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <div class="product-image">
+                        ⌚
+                        <div class="product-badge" style="background-color: var(--color-danger);">-45% OFF</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-seller">WearableTech</div>
+                        <div class="product-title">Smartwatch Fitness Tracker</div>
+                        <div class="product-rating">
+                            <span class="stars">⭐⭐⭐⭐</span>
+                            <span class="rating-count">(1523)</span>
+                        </div>
+                        <div class="product-price">
+                            $71.49
+                            <small style="text-decoration: line-through; color: var(--color-text-light);">$129.99</small>
+                        </div>
+                        <div style="color: var(--color-success); font-size: 13px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 16v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4"></path><polyline points="7 12 12 17 17 12"></polyline><line x1="12" y1="17" x2="12" y2="3"></line></svg>
+                            Llega mañana
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-add-cart" onclick="addToCart(13)">Agregar al Carrito</button>
+                            <button class="btn-icon" title="Favoritos">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+        <!-- Products -->
+        <section class="products-section" id="productos">
+            <div class="section-header">
+                <h2>Productos Destacados</h2>
+                <div class="filter-sort">
+                    <select id="sortSelect" onchange="sortProducts()">
+                        <option value="relevance">Más relevantes</option>
+                        <option value="price-asc">Menor precio</option>
+                        <option value="price-desc">Mayor precio</option>
+                        <option value="rating">Mejor valorados</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be inserted here by JavaScript -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Sobre Ilinza</h3>
+                <ul>
+                    <li><a href="#">Quiénes somos</a></li>
+                    <li><a href="#">Trabaja con nosotros</a></li>
+                    <li><a href="#">Prensa</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Comprar</h3>
+                <ul>
+                    <li><a href="#">Cómo comprar</a></li>
+                    <li><a href="#">Métodos de pago</a></li>
+                    <li><a href="#">Envíos</a></li>
+                    <li><a href="#">Devoluciones</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Vender</h3>
+                <ul>
+                    <li><a href="#">Cómo vender</a></li>
+                    <li><a href="#">Regístrate como vendedor</a></li>
+                    <li><a href="#">Tarifas</a></li>
+                    <li><a href="#">Centro de vendedores</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Ayuda</h3>
+                <ul>
+                    <li><a href="#">Centro de ayuda</a></li>
+                    <li><a href="#">Contáctanos</a></li>
+                    <li><a href="#">Términos y condiciones</a></li>
+                    <li><a href="#">Política de privacidad</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Ilinza Marketplace Ecuador. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Mi Carrito</h2>
+                <button class="modal-close" onclick="closeModal('cartModal')">&times;</button>
+            </div>
+            <div id="cartItems">
+                <div class="empty-cart">
+                    <p>Tu carrito está vacío</p>
+                </div>
+            </div>
+            <div id="cartTotal" style="display: none;">
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span id="totalAmount">$0.00</span>
+                </div>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 16px;" onclick="checkout()">Proceder al Pago</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Location Modal -->
+    <div class="modal" id="locationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📍 Elige tu ubicación de envío</h2>
+                <button class="modal-close" onclick="closeModal('locationModal')">&times;</button>
+            </div>
+            
+            <p style="color: var(--color-text-light); margin-bottom: 20px; font-size: 14px;">
+                La ubicación de envío determina los productos disponibles, tiempos de entrega y costos de envío.
+            </p>
+            
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px;">País / Región</label>
+                <select id="modalCountrySelect" style="width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 8px; font-size: 14px;">
+                    <option value="EC">🇪🇨 Ecuador</option>
+                    <option value="US">🇺🇸 Estados Unidos</option>
+                    <option value="CO">🇨🇴 Colombia</option>
+                    <option value="PE">🇵🇪 Perú</option>
+                    <option value="MX">🇲🇽 México</option>
+                    <option value="ES">🇪🇸 España</option>
+                </select>
+            </div>
+
+            <div style="margin-bottom: 16px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px;">Dirección</label>
+                <input type="text" id="modalAddressInput" placeholder="Calle, número, ciudad" style="width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 8px; font-size: 14px;">
+            </div>
+
+            <div style="margin-bottom: 24px;">
+                <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px;">Código Postal</label>
+                <input type="text" id="modalPostalCodeInput" placeholder="Ej: 170102" style="width: 100%; padding: 12px; border: 1px solid var(--color-border); border-radius: 8px; font-size: 14px;">
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%;" onclick="saveLocation()">Guardar Ubicación</button>
+            
+            <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--color-border);">
+                <p style="font-size: 13px; color: var(--color-text-light); margin: 0;">
+                    💡 <strong>Tip:</strong> Guarda tu dirección para una experiencia de compra más rápida
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Iniciar Sesión</h2>
+                <button class="modal-close" onclick="closeModal('loginModal')">&times;</button>
+            </div>
+            <p style="text-align: center; color: var(--color-text-light); padding: 20px;">
+                Función de demostración. En una plataforma real, aquí ingresarías tus credenciales.
+            </p>
+        </div>
+    </div>
+
+    <!-- Seller Modal -->
+    <div class="modal" id="sellerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Conviértete en Vendedor</h2>
+                <button class="modal-close" onclick="closeModal('sellerModal')">&times;</button>
+            </div>
+            <p style="color: var(--color-text-light); margin-bottom: 20px;">
+                Usa tu misma cuenta de Ilinza para vender. Solo necesitas completar un proceso de verificación adicional.
+            </p>
+            
+            <div style="background-color: var(--color-accent-light); padding: 16px; border-radius: 12px; margin-bottom: 20px;">
+                <h3 style="font-size: 16px; margin-bottom: 12px; color: var(--color-primary); display: flex; align-items: center; gap: 8px;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                    Pasos para Verificación
+                </h3>
+                <ol style="margin: 0; padding-left: 20px; color: var(--color-text);">
+                    <li style="margin-bottom: 10px;"><strong>Verifica tu identidad</strong> - Documento de identidad válido</li>
+                    <li style="margin-bottom: 10px;"><strong>Información bancaria</strong> - Para recibir tus pagos</li>
+                    <li style="margin-bottom: 10px;"><strong>Datos de contacto</strong> - Teléfono y dirección verificados</li>
+                    <li style="margin-bottom: 10px;"><strong>Aprobación</strong> - Revisión en 24-48 horas</li>
+                </ol>
+            </div>
+
+            <ul style="margin: 20px 0; padding-left: 20px;">
+                <li style="margin-bottom: 12px;">✓ Sin costo de registro</li>
+                <li style="margin-bottom: 12px;">✓ Millones de compradores potenciales</li>
+                <li style="margin-bottom: 12px;">✓ Herramientas de gestión de ventas</li>
+                <li style="margin-bottom: 12px;">✓ Pagos seguros y rápidos</li>
+                <li style="margin-bottom: 12px;">✓ Una sola cuenta para comprar y vender</li>
+            </ul>
+            <button class="btn btn-primary" style="width: 100%;" onclick="startSellerVerification()">Iniciar Verificación</button>
+        </div>
+    </div>
+
+    <!-- Recommended Products Modal -->
+    <div class="modal" id="recommendedModal">
+        <div class="modal-content" style="max-width: 1200px; max-height: 90vh;">
+            <div class="modal-header">
+                <h2>✨ Productos Recomendados para Ti</h2>
+                <button class="modal-close" onclick="closeModal('recommendedModal')">&times;</button>
+            </div>
+            
+            <div style="background-color: var(--color-accent-light); padding: 16px; border-radius: 12px; margin-bottom: 24px;">
+                <p style="margin: 0; color: var(--color-text); font-size: 14px;">
+                    <strong>📊 Basado en tus búsquedas:</strong> <span id="userSearchHistory">Electrónica, Deportes, Artesanías</span>
+                </p>
+            </div>
+            
+            <!-- Recommended Grid -->
+            <div id="recommendedGrid" class="products-grid" style="max-height: 60vh; overflow-y: auto;">
+                <!-- Products will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- All Deals Modal -->
+    <div class="modal" id="allDealsModal">
+        <div class="modal-content" style="max-width: 1200px; max-height: 90vh;">
+            <div class="modal-header">
+                <h2>⚡ Todas las Ofertas del Día</h2>
+                <button class="modal-close" onclick="closeModal('allDealsModal')">&times;</button>
+            </div>
+            
+            <!-- Filters -->
+            <div style="background-color: var(--color-background); padding: 20px; border-radius: 12px; margin-bottom: 24px;">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 13px;">Categoría</label>
+                        <select id="dealsCategoryFilter" onchange="filterDeals()" style="width: 100%; padding: 8px 12px; border: 1px solid var(--color-border); border-radius: 8px; font-size: 14px;">
+                            <option value="all">Todas las categorías</option>
+                            <option value="electronica">Electrónica</option>
+                            <option value="moda">Moda y Ropa</option>
+                            <option value="hogar">Hogar</option>
+                            <option value="deportes">Deportes</option>
+                            <option value="artesanias">Artesanías</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 13px;">Descuento</label>
+                        <select id="dealsDiscountFilter" onchange="filterDeals()" style="width: 100%; padding: 8px 12px; border: 1px solid var(--color-border); border-radius: 8px; font-size: 14px;">
+                            <option value="all">Todos los descuentos</option>
+                            <option value="50">50% o más</option>
+                            <option value="40">40% o más</option>
+                            <option value="30">30% o más</option>
+                            <option value="20">20% o más</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 13px;">Precio máximo</label>
+                        <select id="dealsPriceFilter" onchange="filterDeals()" style="width: 100%; padding: 8px 12px; border: 1px solid var(--color-border); border-radius: 8px; font-size: 14px;">
+                            <option value="all">Cualquier precio</option>
+                            <option value="50">Hasta $50</option>
+                            <option value="100">Hasta $100</option>
+                            <option value="200">Hasta $200</option>
+                            <option value="500">Hasta $500</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600; font-size: 13px;">Ordenar por</label>
+                        <select id="dealsSortFilter" onchange="filterDeals()" style="width: 100%; padding: 8px 12px; border: 1px solid var(--color-border); border-radius: 8px; font-size: 14px;">
+                            <option value="discount">Mayor descuento</option>
+                            <option value="price-asc">Menor precio</option>
+                            <option value="price-desc">Mayor precio</option>
+                            <option value="rating">Mejor valorados</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Deals Grid -->
+            <div id="allDealsGrid" class="products-grid" style="max-height: 60vh; overflow-y: auto;">
+                <!-- Products will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div class="modal" id="productDetailModal">
+        <div class="modal-content" style="max-width: 1000px; max-height: 90vh;">
+            <div class="modal-header">
+                <h2 id="detailProductTitle">Producto</h2>
+                <button class="modal-close" onclick="closeModal('productDetailModal')">&times;</button>
+            </div>
+            
+            <div id="productDetailContent" style="overflow-y: auto; max-height: 75vh;">
+                <!-- Product detail will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Seller Verification Modal -->
+    <div class="modal" id="verificationModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Verificación de Vendedor</h2>
+                <button class="modal-close" onclick="closeModal('verificationModal')">&times;</button>
+            </div>
+            
+            <div id="verificationSteps">
+                <!-- Step 1: Identity -->
+                <div class="verification-step" id="step1">
+                    <h3 style="color: var(--color-accent); margin-bottom: 16px;">Paso 1: Verificación de Identidad</h3>
+                    <p style="color: var(--color-text-light); margin-bottom: 16px;">Necesitamos verificar tu identidad para proteger a compradores y vendedores.</p>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">Tipo de Documento</label>
+                        <select style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: 12px;">
+                            <option>Cédula de Identidad</option>
+                            <option>Pasaporte</option>
+                            <option>RUC</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">Número de Documento</label>
+                        <input type="text" placeholder="Ej: 1234567890" style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: 12px;">
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">Foto del Documento</label>
+                        <div style="border: 2px dashed var(--color-border); border-radius: 12px; padding: 30px; text-align: center; cursor: pointer; background-color: var(--color-background); display: flex; flex-direction: column; align-items: center; gap: 8px;">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path><circle cx="12" cy="13" r="4"></circle></svg>
+                            <span style="color: var(--color-text-light);">Haz clic para subir foto</span>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary" style="width: 100%;" onclick="nextStep(2)">Continuar →</button>
+                </div>
+
+                <!-- Step 2: Banking -->
+                <div class="verification-step" id="step2" style="display: none;">
+                    <h3 style="color: var(--color-accent); margin-bottom: 16px;">Paso 2: Información Bancaria</h3>
+                    <p style="color: var(--color-text-light); margin-bottom: 16px;">Para recibir tus pagos de forma segura.</p>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">Banco</label>
+                        <select style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: 12px;">
+                            <option>Banco Pichincha</option>
+                            <option>Banco Guayaquil</option>
+                            <option>Banco del Pacífico</option>
+                            <option>Produbanco</option>
+                            <option>Otro</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">Tipo de Cuenta</label>
+                        <select style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: 12px;">
+                            <option>Cuenta de Ahorros</option>
+                            <option>Cuenta Corriente</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">Número de Cuenta</label>
+                        <input type="text" placeholder="Ej: 1234567890" style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: 12px;">
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">Moneda de Pago</label>
+                        <select style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: 12px;">
+                            <option>USD - Dólar Estadounidense</option>
+                            <option>EUR - Euro</option>
+                            <option>COP - Peso Colombiano</option>
+                            <option>PEN - Sol Peruano</option>
+                        </select>
+                    </div>
+
+                    <div style="display: flex; gap: 12px;">
+                        <button class="btn btn-secondary" style="flex: 1;" onclick="nextStep(1)">← Atrás</button>
+                        <button class="btn btn-primary" style="flex: 1;" onclick="nextStep(3)">Continuar →</button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Contact -->
+                <div class="verification-step" id="step3" style="display: none;">
+                    <h3 style="color: var(--color-accent); margin-bottom: 16px;">Paso 3: Datos de Contacto</h3>
+                    <p style="color: var(--color-text-light); margin-bottom: 16px;">Para comunicarnos contigo sobre tus ventas.</p>
+                    
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">Teléfono</label>
+                        <input type="tel" placeholder="+593 99 123 4567" style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: 12px;">
+                    </div>
+
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">Dirección Completa</label>
+                        <textarea placeholder="Calle, número, ciudad, provincia" style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: 12px; min-height: 80px;"></textarea>
+                    </div>
+
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">País</label>
+                        <select style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: 12px;">
+                            <option>Ecuador</option>
+                            <option>Colombia</option>
+                            <option>Perú</option>
+                            <option>Estados Unidos</option>
+                            <option>México</option>
+                            <option>España</option>
+                            <option>Otro</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-bottom: 16px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">Ciudad</label>
+                        <input type="text" placeholder="Ej: Quito, Guayaquil, etc." style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: 12px;">
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; margin-bottom: 8px; font-weight: 600;">Código Postal</label>
+                        <input type="text" placeholder="Ej: 170150" style="width: 100%; padding: 10px; border: 1px solid var(--color-border); border-radius: 12px;">
+                    </div>
+
+                    <div style="display: flex; gap: 12px;">
+                        <button class="btn btn-secondary" style="flex: 1;" onclick="nextStep(2)">← Atrás</button>
+                        <button class="btn btn-primary" style="flex: 1;" onclick="submitVerification()">Enviar Verificación</button>
+                    </div>
+                </div>
+
+                <!-- Success Message -->
+                <div class="verification-step" id="stepSuccess" style="display: none;">
+                    <div style="text-align: center; padding: 40px 20px;">
+                        <div style="margin-bottom: 20px;">
+                        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="var(--color-success)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    </div>
+                        <h3 style="color: var(--color-success); margin-bottom: 16px;">¡Verificación Enviada!</h3>
+                        <p style="color: var(--color-text-light); margin-bottom: 24px;">
+                            Revisaremos tu información en las próximas 24-48 horas. Te notificaremos por email cuando tu cuenta de vendedor esté activada.
+                        </p>
+                        <button class="btn btn-primary" onclick="closeModal('verificationModal')">Entendido</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample products data with realistic descriptions and specifications
+        const allProducts = [
+            {
+                id: 1,
+                title: "Samsung Galaxy S24 Ultra 5G - 256GB, 12GB RAM, Pantalla AMOLED 6.8\"",
+                seller: "TechStore Ecuador",
+                price: 899.99,
+                rating: 4.8,
+                reviews: 1247,
+                category: "electronica",
+                icon: "📱",
+                image: "https://pplx-res.cloudinary.com/image/upload/v1762540141/pplx_project_search_images/187ffd1c6b1bc2d1b20bdfde3aec3174314d16c8.png",
+                badge: "Envío gratis",
+                delivery: "Llega mañana",
+                description: "El Samsung Galaxy S24 Ultra redefine la innovación móvil con su potente procesador Snapdragon 8 Gen 3, cámara de 200MP con zoom óptico de 100x, y batería de 5000mAh con carga rápida de 45W. Incluye S Pen integrado, resistencia IP68 al agua y polvo, y pantalla Dynamic AMOLED 2X con tasa de refresco de 120Hz adaptativa. Perfecto para fotografía profesional, gaming extremo y productividad empresarial.",
+                specifications: {
+                    "Procesador": "Qualcomm Snapdragon 8 Gen 3 (4nm)",
+                    "Memoria RAM": "12 GB LPDDR5X",
+                    "Almacenamiento": "256 GB UFS 4.0",
+                    "Pantalla": "6.8\" Dynamic AMOLED 2X, 3120 x 1440px, 120Hz",
+                    "Cámara Principal": "200MP OIS + 50MP Telephoto + 12MP Ultra Wide + 10MP Telephoto",
+                    "Cámara Frontal": "12MP con HDR 4K",
+                    "Batería": "5000mAh con carga rápida 45W, inalámbrica 15W",
+                    "Sistema Operativo": "Android 14 con One UI 6.0",
+                    "Conectividad": "5G, WiFi 7, Bluetooth 5.3, NFC, USB-C 3.2",
+                    "Resistencia": "IP68 (agua y polvo)",
+                    "Dimensiones": "162.3 x 79 x 8.6 mm",
+                    "Peso": "232 gramos"
+                },
+                images: ["📱", "📱", "📱", "📱"]
+            },
+            {
+                id: 2,
+                title: "ASUS ROG Strix G16 - Intel Core i9-13980HX, RTX 4070 8GB, 16GB RAM, 1TB SSD, 16\" QHD 240Hz",
+                seller: "CompuWorld",
+                price: 1299.99,
+                rating: 4.9,
+                reviews: 856,
+                category: "electronica",
+                icon: "💻",
+                image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=400&h=400&fit=crop",
+                delivery: "Entrega en 2 días",
+                description: "La laptop gaming definitiva para jugadores profesionales y creadores de contenido. Equipada con procesador Intel Core i9 de 13va generación, NVIDIA GeForce RTX 4070 con 8GB GDDR6, y pantalla QHD de 240Hz para una experiencia visual sin precedentes. Sistema de refrigeración inteligente ROG con ventiladores Arc Flow de 84 aspas, teclado RGB personalizable por tecla, y audio certificado por Dolby Atmos. Incluye Windows 11 Pro y 3 meses de Xbox Game Pass Ultimate.",
+                specifications: {
+                    "Procesador": "Intel Core i9-13980HX (24 núcleos, hasta 5.6GHz)",
+                    "Tarjeta Gráfica": "NVIDIA GeForce RTX 4070 8GB GDDR6",
+                    "Memoria RAM": "16GB DDR5 4800MHz (expandible a 32GB)",
+                    "Almacenamiento": "1TB NVMe PCIe 4.0 SSD",
+                    "Pantalla": "16\" QHD (2560x1440) 240Hz, 3ms, 100% DCI-P3",
+                    "Sistema Operativo": "Windows 11 Pro",
+                    "Conectividad": "WiFi 6E, Bluetooth 5.3, Thunderbolt 4, HDMI 2.1",
+                    "Puertos": "3x USB 3.2, 1x USB-C Thunderbolt 4, RJ45, Audio Jack",
+                    "Batería": "90Wh con carga rápida 280W",
+                    "Teclado": "RGB por tecla con switch Overstroke",
+                    "Audio": "Dolby Atmos, 2x altavoces 4W + 2x woofers",
+                    "Dimensiones": "354 x 264 x 22.6 mm",
+                    "Peso": "2.5 kg"
+                },
+                images: ["💻", "💻", "💻", "💻"]
+            },
+            {
+                id: 3,
+                title: "Zapatillas Running Premium",
+                seller: "SportZone",
+                price: 89.99,
+                rating: 4.6,
+                reviews: 2341,
+                category: "deportes",
+                icon: "👟",
+                image: "https://pplx-res.cloudinary.com/image/upload/v1762540141/pplx_project_search_images/d571283b6d337562e7b87b68bfccba061dafff32.png",
+                badge: "Oferta",
+                delivery: "Llega mañana"
+            },
+            {
+                id: 4,
+                title: "Sombrero de Paja Toquilla - Artesanía",
+                seller: "Artesanías Cuenca",
+                price: 65.00,
+                rating: 5.0,
+                reviews: 432,
+                category: "artesanias",
+                icon: "🎩",
+                image: "https://pplx-res.cloudinary.com/image/upload/v1762540141/pplx_project_search_images/532e5cf9d2a28dc5a82bff73125fb9b02c435961.png",
+                badge: "Hecho a mano",
+                delivery: "Entrega en 3 días"
+            },
+            {
+                id: 5,
+                title: "Vestido Elegante Mujer",
+                seller: "Fashion Store",
+                price: 45.50,
+                rating: 4.7,
+                reviews: 1567,
+                category: "moda",
+                icon: "👗",
+                image: "https://pplx-res.cloudinary.com/image/upload/v1762540141/pplx_project_search_images/14f8bb83dfe5cc79092d82b0f55410d0ea2344f3.png",
+                delivery: "Llega mañana"
+            },
+            {
+                id: 6,
+                title: "Juego de Sábanas King Size",
+                seller: "Hogar Confort",
+                price: 79.99,
+                rating: 4.5,
+                reviews: 723,
+                category: "hogar",
+                icon: "🛏️",
+                image: "https://pplx-res.cloudinary.com/image/upload/v1762540141/pplx_project_search_images/396a11cbe1369daf16fc6871967b2c1b6f2343aa.png",
+                badge: "Envío gratis",
+                delivery: "Entrega en 2 días"
+            },
+            {
+                id: 7,
+                title: "Auriculares Bluetooth Noise Cancelling",
+                seller: "AudioTech",
+                price: 159.99,
+                rating: 4.8,
+                reviews: 1891,
+                category: "electronica",
+                icon: "🎧",
+                image: "https://pplx-res.cloudinary.com/image/upload/v1755090498/pplx_project_search_images/0c3e25245e341a18f7419a590055908b6497e370.png",
+                delivery: "Llega hoy"
+            },
+            {
+                id: 8,
+                title: "Bicicleta Montaña 21 Velocidades",
+                seller: "BiciEcuador",
+                price: 425.00,
+                rating: 4.7,
+                reviews: 612,
+                category: "deportes",
+                icon: "🚴",
+                image: "https://pplx-res.cloudinary.com/image/upload/v1762540141/pplx_project_search_images/9bf1bb654a23ce7d1bb3e9f0f9cb3ab047560136.png",
+                delivery: "Entrega en 4 días"
+            },
+            {
+                id: 9,
+                title: "Cafetera Espresso Automática",
+                seller: "HomeAppliances",
+                price: 199.99,
+                rating: 4.6,
+                reviews: 934,
+                category: "hogar",
+                icon: "☕",
+                image: "https://pplx-res.cloudinary.com/image/upload/v1762540141/pplx_project_search_images/a98f8d491751cb674bbaebc315dc552aa1b1ddd3.png",
+                delivery: "Entrega en 2 días"
+            },
+            {
+                id: 10,
+                title: "Set de Pulseras Artesanales Tagua",
+                seller: "Artesanías Amazonia",
+                price: 28.50,
+                rating: 4.9,
+                reviews: 287,
+                category: "artesanias",
+                icon: "📿",
+                image: "https://pplx-res.cloudinary.com/image/upload/v1762540141/pplx_project_search_images/79b638766610c75c538f8f7a28d971800e6b2654.png",
+                badge: "Eco-friendly",
+                delivery: "Entrega en 5 días"
+            },
+            {
+                id: 11,
+                title: "Libro: Cien Años de Soledad",
+                seller: "Librería Nacional",
+                price: 18.99,
+                rating: 5.0,
+                reviews: 3421,
+                category: "libros",
+                icon: "📖",
+                delivery: "Llega mañana"
+            },
+            {
+                id: 12,
+                title: "Camisa Formal Hombre Slim Fit",
+                seller: "Elegance Men",
+                price: 39.99,
+                rating: 4.5,
+                reviews: 845,
+                category: "moda",
+                icon: "👔",
+                image: "https://pplx-res.cloudinary.com/image/upload/v1760195366/pplx_project_search_images/19eb889bad8a96b436c04418712ddac874e324e0.png",
+                delivery: "Entrega en 3 días"
+            },
+            {
+                id: 13,
+                title: "Smartwatch Fitness Tracker",
+                seller: "WearableTech",
+                price: 129.99,
+                rating: 4.7,
+                reviews: 1523,
+                category: "electronica",
+                icon: "⌚",
+                badge: "Nuevo",
+                delivery: "Llega mañana"
+            },
+            {
+                id: 14,
+                title: "Pelota de Fútbol Profesional",
+                seller: "Deportes Total",
+                price: 34.99,
+                rating: 4.8,
+                reviews: 1067,
+                category: "deportes",
+                icon: "⚽",
+                delivery: "Llega hoy"
+            },
+            {
+                id: 15,
+                title: "Juego de Ollas Antiadherentes",
+                seller: "Cocina Plus",
+                price: 89.99,
+                rating: 4.6,
+                reviews: 678,
+                category: "hogar",
+                icon: "🍳",
+                delivery: "Entrega en 2 días"
+            },
+            {
+                id: 16,
+                title: "Poncho de Lana Andino",
+                seller: "Textiles Otavalo",
+                price: 55.00,
+                rating: 4.9,
+                reviews: 394,
+                category: "artesanias",
+                icon: "🧣",
+                badge: "Hecho a mano",
+                delivery: "Entrega en 4 días"
+            }
+        ];
+
+        let displayedProducts = [...allProducts];
+        let cart = [];
+
+        // Initialize
+        window.onload = () => {
+            renderProducts(displayedProducts);
+            updateCartCount();
+            
+            // Hide splash screen after 3 seconds
+            setTimeout(() => {
+                const splashScreen = document.getElementById('splashScreen');
+                splashScreen.classList.add('hidden');
+            }, 3800); // 3s display + 0.8s fade out
+            
+            // Hide hero banner with smooth scroll to offers/recommendations section
+            setTimeout(() => {
+                const heroBanner = document.getElementById('heroBanner');
+                heroBanner.style.opacity = '0';
+                setTimeout(() => {
+                    heroBanner.style.display = 'none';
+                    // Smooth scroll to offers section (instead of products)
+                    const offersSection = document.querySelector('.products-section');
+                    if (offersSection) {
+                        offersSection.scrollIntoView({ 
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }, 800); // Wait for fade out
+            }, 8000); // Show hero for 4.2s after splash (3.8s + 4.2s = 8s)
+        };
+
+        // Render products
+        function renderProducts(products) {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <div class="product-image">
+                        ${product.image ? `<img src="${product.image}" alt="${product.title}">` : product.icon}
+                        ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+                    </div>
+                    <div class="product-info">
+                        <div class="product-seller">${product.seller}</div>
+                        <div class="product-title">${product.title}</div>
+                        <div class="product-rating">
+                            <span class="stars">${'⭐'.repeat(Math.floor(product.rating))}</span>
+                            <span class="rating-count">(${product.reviews})</span>
+                        </div>
+                        <div class="product-price">
+                            $${product.price.toFixed(2)}
+                            <small>USD</small>
+                        </div>
+                        ${product.delivery ? `<div style="color: var(--color-success); font-size: 13px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 16v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4"></path><polyline points="7 12 12 17 17 12"></polyline><line x1="12" y1="17" x2="12" y2="3"></line></svg>${product.delivery}</div>` : ''}
+                        <div class="product-actions">
+                            <button class="btn-add-cart" onclick="viewProductDetail(${product.id})">
+                                Ver Detalles
+                            </button>
+                            <button class="btn-icon" title="Favoritos">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // User search history tracking
+        let userSearchHistory = [];
+
+        // Search products
+        function searchProducts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (searchTerm.trim() === '') {
+                displayedProducts = [...allProducts];
+            } else {
+                // Track search
+                if (!userSearchHistory.includes(searchTerm)) {
+                    userSearchHistory.unshift(searchTerm);
+                    if (userSearchHistory.length > 5) {
+                        userSearchHistory.pop();
+                    }
+                    updateLastSearch();
+                }
+                
+                displayedProducts = allProducts.filter(product => 
+                    product.title.toLowerCase().includes(searchTerm) ||
+                    product.seller.toLowerCase().includes(searchTerm) ||
+                    product.category.toLowerCase().includes(searchTerm)
+                );
+            }
+            renderProducts(displayedProducts);
+        }
+
+        // Update last search display
+        function updateLastSearch() {
+            if (userSearchHistory.length > 0) {
+                document.getElementById('lastSearchText').textContent = userSearchHistory[0].charAt(0).toUpperCase() + userSearchHistory[0].slice(1);
+                document.getElementById('userSearchHistory').textContent = userSearchHistory.slice(0, 3).map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(', ');
+            }
+        }
+
+        // Filter by category
+        function filterByCategory(category) {
+            // Track category as search
+            if (category !== 'all' && !userSearchHistory.includes(category)) {
+                userSearchHistory.unshift(category);
+                if (userSearchHistory.length > 5) {
+                    userSearchHistory.pop();
+                }
+                updateLastSearch();
+            }
+            
+            if (category === 'all') {
+                displayedProducts = [...allProducts];
+            } else {
+                displayedProducts = allProducts.filter(product => product.category === category);
+            }
+            renderProducts(displayedProducts);
+            document.getElementById('searchInput').value = '';
+            
+            // Scroll to products
+            document.getElementById('productos').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Sort products
+        function sortProducts() {
+            const sortBy = document.getElementById('sortSelect').value;
+            
+            switch(sortBy) {
+                case 'price-asc':
+                    displayedProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-desc':
+                    displayedProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'rating':
+                    displayedProducts.sort((a, b) => b.rating - a.rating);
+                    break;
+                default:
+                    displayedProducts = [...allProducts];
+            }
+            
+            renderProducts(displayedProducts);
+        }
+
+        // Add to cart
+        function addToCart(productId) {
+            const product = allProducts.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            
+            updateCartCount();
+            
+            // Show feedback
+            alert(`${product.title} agregado al carrito`);
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('cartCount').textContent = totalItems;
+        }
+
+        // Show cart
+        function showCart() {
+            const cartItemsDiv = document.getElementById('cartItems');
+            const cartTotalDiv = document.getElementById('cartTotal');
+            
+            if (cart.length === 0) {
+                cartItemsDiv.innerHTML = '<div class="empty-cart"><p>Tu carrito está vacío</p></div>';
+                cartTotalDiv.style.display = 'none';
+            } else {
+                cartItemsDiv.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <div class="cart-item-image">${item.icon}</div>
+                        <div class="cart-item-info">
+                            <div class="cart-item-title">${item.title}</div>
+                            <div class="cart-item-price">$${item.price.toFixed(2)} x ${item.quantity}</div>
+                            <button onclick="removeFromCart(${item.id})" style="color: var(--color-danger); background: none; border: none; cursor: pointer; font-size: 12px; margin-top: 8px;">
+                                Eliminar
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+                
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                document.getElementById('totalAmount').textContent = `$${total.toFixed(2)}`;
+                cartTotalDiv.style.display = 'block';
+            }
+            
+            document.getElementById('cartModal').classList.add('active');
+        }
+
+        // Remove from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartCount();
+            showCart();
+        }
+
+        // Checkout
+        function checkout() {
+            alert('Función de demostración. En una plataforma real, procederías al pago seguro.');
+        }
+
+        // Modal functions
+        function showModal(type) {
+            if (type === 'login') {
+                document.getElementById('loginModal').classList.add('active');
+            } else if (type === 'seller') {
+                document.getElementById('sellerModal').classList.add('active');
+            }
+        }
+
+        // Start seller verification process
+        function startSellerVerification() {
+            closeModal('sellerModal');
+            document.getElementById('verificationModal').classList.add('active');
+            // Reset to step 1
+            document.querySelectorAll('.verification-step').forEach(step => step.style.display = 'none');
+            document.getElementById('step1').style.display = 'block';
+        }
+
+        // Navigate between verification steps
+        function nextStep(stepNumber) {
+            document.querySelectorAll('.verification-step').forEach(step => step.style.display = 'none');
+            document.getElementById('step' + stepNumber).style.display = 'block';
+        }
+
+        // Submit verification
+        function submitVerification() {
+            document.querySelectorAll('.verification-step').forEach(step => step.style.display = 'none');
+            document.getElementById('stepSuccess').style.display = 'block';
+        }
+
+        // Location management
+        let userLocation = {
+            country: 'EC',
+            address: '',
+            postalCode: '170102'
+        };
+
+        function showLocationModal() {
+            document.getElementById('locationModal').classList.add('active');
+            document.getElementById('modalCountrySelect').value = userLocation.country;
+            document.getElementById('modalAddressInput').value = userLocation.address;
+            document.getElementById('modalPostalCodeInput').value = userLocation.postalCode;
+        }
+
+        function saveLocation() {
+            userLocation.country = document.getElementById('modalCountrySelect').value;
+            userLocation.address = document.getElementById('modalAddressInput').value;
+            userLocation.postalCode = document.getElementById('modalPostalCodeInput').value;
+            
+            // Update header display
+            const countryNames = {
+                'EC': 'Ecuador',
+                'US': 'Estados Unidos',
+                'CO': 'Colombia',
+                'PE': 'Perú',
+                'MX': 'México',
+                'ES': 'España'
+            };
+            
+            const displayText = userLocation.postalCode 
+                ? `${countryNames[userLocation.country]} ${userLocation.postalCode}`
+                : countryNames[userLocation.country];
+            
+            document.getElementById('headerLocationText').textContent = displayText;
+            
+            closeModal('locationModal');
+            
+            // Show feedback
+            alert(`Ubicación actualizada: ${displayText}`);
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Close modal on outside click
+        window.onclick = (event) => {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+            }
+        };
+
+        // Search on Enter key
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchProducts();
+            }
+        });
+
+        // All deals products (expanded list)
+        const allDealsProducts = [
+            {
+                id: 1,
+                title: "Smartphone Galaxy Pro Max",
+                seller: "TechStore Ecuador",
+                price: 539.99,
+                originalPrice: 899.99,
+                discount: 40,
+                rating: 4.8,
+                reviews: 1247,
+                category: "electronica",
+                icon: "📱",
+                delivery: "Llega mañana"
+            },
+            {
+                id: 2,
+                title: "Laptop Gaming RGB 16GB RAM",
+                seller: "CompuWorld",
+                price: 844.99,
+                originalPrice: 1299.99,
+                discount: 35,
+                rating: 4.9,
+                reviews: 856,
+                category: "electronica",
+                icon: "💻",
+                delivery: "Entrega en 2 días"
+            },
+            {
+                id: 7,
+                title: "Auriculares Bluetooth Noise Cancelling",
+                seller: "AudioTech",
+                price: 79.99,
+                originalPrice: 159.99,
+                discount: 50,
+                rating: 4.8,
+                reviews: 1891,
+                category: "electronica",
+                icon: "🎧",
+                delivery: "Llega hoy"
+            },
+            {
+                id: 13,
+                title: "Smartwatch Fitness Tracker",
+                seller: "WearableTech",
+                price: 71.49,
+                originalPrice: 129.99,
+                discount: 45,
+                rating: 4.7,
+                reviews: 1523,
+                category: "electronica",
+                icon: "⌚",
+                delivery: "Llega mañana"
+            },
+            {
+                id: 3,
+                title: "Zapatillas Running Premium",
+                seller: "SportZone",
+                price: 53.99,
+                originalPrice: 89.99,
+                discount: 40,
+                rating: 4.6,
+                reviews: 2341,
+                category: "deportes",
+                icon: "👟",
+                delivery: "Llega mañana"
+            },
+            {
+                id: 8,
+                title: "Bicicleta Montaña 21 Velocidades",
+                seller: "BiciEcuador",
+                price: 297.50,
+                originalPrice: 425.00,
+                discount: 30,
+                rating: 4.7,
+                reviews: 612,
+                category: "deportes",
+                icon: "🚴",
+                delivery: "Entrega en 4 días"
+            },
+            {
+                id: 5,
+                title: "Vestido Elegante Mujer",
+                seller: "Fashion Store",
+                price: 27.30,
+                originalPrice: 45.50,
+                discount: 40,
+                rating: 4.7,
+                reviews: 1567,
+                category: "moda",
+                icon: "👗",
+                delivery: "Llega mañana"
+            },
+            {
+                id: 12,
+                title: "Camisa Formal Hombre Slim Fit",
+                seller: "Elegance Men",
+                price: 23.99,
+                originalPrice: 39.99,
+                discount: 40,
+                rating: 4.5,
+                reviews: 845,
+                category: "moda",
+                icon: "👔",
+                delivery: "Entrega en 3 días"
+            },
+            {
+                id: 6,
+                title: "Juego de Sábanas King Size",
+                seller: "Hogar Confort",
+                price: 47.99,
+                originalPrice: 79.99,
+                discount: 40,
+                rating: 4.5,
+                reviews: 723,
+                category: "hogar",
+                icon: "🛏️",
+                delivery: "Entrega en 2 días"
+            },
+            {
+                id: 9,
+                title: "Cafetera Espresso Automática",
+                seller: "HomeAppliances",
+                price: 119.99,
+                originalPrice: 199.99,
+                discount: 40,
+                rating: 4.6,
+                reviews: 934,
+                category: "hogar",
+                icon: "☕",
+                delivery: "Entrega en 2 días"
+            },
+            {
+                id: 10,
+                title: "Set de Pulseras Artesanales Tagua",
+                seller: "Artesanías Amazonia",
+                price: 17.10,
+                originalPrice: 28.50,
+                discount: 40,
+                rating: 4.9,
+                reviews: 287,
+                category: "artesanias",
+                icon: "📿",
+                delivery: "Entrega en 5 días"
+            },
+            {
+                id: 16,
+                title: "Poncho de Lana Andino",
+                seller: "Textiles Otavalo",
+                price: 33.00,
+                originalPrice: 55.00,
+                discount: 40,
+                rating: 4.9,
+                reviews: 394,
+                category: "artesanias",
+                icon: "🧣",
+                delivery: "Entrega en 4 días"
+            }
+        ];
+
+        let filteredDeals = [...allDealsProducts];
+
+        // Show all deals modal
+        function showAllDeals() {
+            document.getElementById('allDealsModal').classList.add('active');
+            filteredDeals = [...allDealsProducts];
+            renderDeals();
+        }
+
+        // Filter deals
+        function filterDeals() {
+            const category = document.getElementById('dealsCategoryFilter').value;
+            const discount = document.getElementById('dealsDiscountFilter').value;
+            const price = document.getElementById('dealsPriceFilter').value;
+            const sort = document.getElementById('dealsSortFilter').value;
+
+            // Apply filters
+            filteredDeals = allDealsProducts.filter(product => {
+                let matches = true;
+                
+                if (category !== 'all' && product.category !== category) {
+                    matches = false;
+                }
+                
+                if (discount !== 'all' && product.discount < parseInt(discount)) {
+                    matches = false;
+                }
+                
+                if (price !== 'all' && product.price > parseInt(price)) {
+                    matches = false;
+                }
+                
+                return matches;
+            });
+
+            // Apply sorting
+            switch(sort) {
+                case 'discount':
+                    filteredDeals.sort((a, b) => b.discount - a.discount);
+                    break;
+                case 'price-asc':
+                    filteredDeals.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-desc':
+                    filteredDeals.sort((a, b) => b.price - a.price);
+                    break;
+                case 'rating':
+                    filteredDeals.sort((a, b) => b.rating - a.rating);
+                    break;
+            }
+
+            renderDeals();
+        }
+
+        // Render deals
+        function renderDeals() {
+            const grid = document.getElementById('allDealsGrid');
+            
+            if (filteredDeals.length === 0) {
+                grid.innerHTML = '<div class="empty-cart" style="padding: 60px 20px;"><p>No se encontraron ofertas con estos filtros</p></div>';
+                return;
+            }
+            
+            grid.innerHTML = filteredDeals.map(product => `
+                <div class="product-card">
+                    <div class="product-image">
+                        ${product.image ? `<img src="${product.image}" alt="${product.title}">` : product.icon}
+                        <div class="product-badge" style="background-color: var(--color-danger);">-${product.discount}% OFF</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="product-seller">${product.seller}</div>
+                        <div class="product-title">${product.title}</div>
+                        <div class="product-rating">
+                            <span class="stars">${'⭐'.repeat(Math.floor(product.rating))}</span>
+                            <span class="rating-count">(${product.reviews})</span>
+                        </div>
+                        <div class="product-price">
+                            $${product.price.toFixed(2)}
+                            <small style="text-decoration: line-through; color: var(--color-text-light);">$${product.originalPrice.toFixed(2)}</small>
+                        </div>
+                        <div style="color: var(--color-success); font-size: 13px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 16v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4"></path><polyline points="7 12 12 17 17 12"></polyline><line x1="12" y1="17" x2="12" y2="3"></line></svg>
+                            ${product.delivery}
+                        </div>
+                        <div class="product-actions">
+                            <button class="btn-add-cart" onclick="addToCart(${product.id})">Agregar al Carrito</button>
+                            <button class="btn-icon" title="Favoritos">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Live countdown timer for deals
+        function updateDealsCountdown() {
+            const now = new Date();
+            const midnight = new Date();
+            midnight.setHours(24, 0, 0, 0);
+            
+            const diff = midnight - now;
+            const hours = Math.floor(diff / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            const countdownEl = document.getElementById('dealsCountdown');
+            if (countdownEl) {
+                countdownEl.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            }
+        }
+
+        // Update countdown every second
+        setInterval(updateDealsCountdown, 1000);
+        updateDealsCountdown();
+
+        // View product detail
+        function viewProductDetail(productId) {
+            const product = allProducts.find(p => p.id === productId);
+            if (!product) return;
+            
+            document.getElementById('detailProductTitle').textContent = product.title;
+            
+            const detailContent = document.getElementById('productDetailContent');
+            detailContent.innerHTML = `
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px; padding: 20px 0;">
+                    <!-- Left Column: Images -->
+                    <div>
+                        <div style="background-color: var(--color-background); border-radius: 16px; height: 400px; display: flex; align-items: center; justify-content: center; font-size: 120px; margin-bottom: 16px; border: 2px solid var(--color-border); overflow: hidden;">
+                            ${product.image ? `<img src="${product.image}" alt="${product.title}" style="width: 100%; height: 100%; object-fit: cover;">` : product.icon}
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
+                            <div style="background-color: var(--color-background); border-radius: 12px; height: 80px; display: flex; align-items: center; justify-content: center; font-size: 32px; border: 2px solid var(--color-border); cursor: pointer; overflow: hidden;">${product.image ? `<img src="${product.image}" alt="${product.title}" style="width: 100%; height: 100%; object-fit: cover;">` : product.icon}</div>
+                            <div style="background-color: var(--color-background); border-radius: 12px; height: 80px; display: flex; align-items: center; justify-content: center; font-size: 32px; border: 2px solid var(--color-border); cursor: pointer; overflow: hidden;">${product.image ? `<img src="${product.image}" alt="${product.title}" style="width: 100%; height: 100%; object-fit: cover;">` : product.icon}</div>
+                            <div style="background-color: var(--color-background); border-radius: 12px; height: 80px; display: flex; align-items: center; justify-content: center; font-size: 32px; border: 2px solid var(--color-border); cursor: pointer; overflow: hidden;">${product.image ? `<img src="${product.image}" alt="${product.title}" style="width: 100%; height: 100%; object-fit: cover;">` : product.icon}</div>
+                            <div style="background-color: var(--color-background); border-radius: 12px; height: 80px; display: flex; align-items: center; justify-content: center; font-size: 32px; border: 2px solid var(--color-border); cursor: pointer; overflow: hidden;">${product.image ? `<img src="${product.image}" alt="${product.title}" style="width: 100%; height: 100%; object-fit: cover;">` : product.icon}</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Column: Details -->
+                    <div>
+                        <div style="margin-bottom: 16px;">
+                            <div style="color: var(--color-accent); font-weight: 600; font-size: 14px; margin-bottom: 8px;">Vendido por</div>
+                            <div style="font-size: 16px; color: var(--color-text);">${product.seller}</div>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <div class="product-rating" style="margin-bottom: 0;">
+                                <span class="stars" style="font-size: 16px;">${'⭐'.repeat(Math.floor(product.rating))}</span>
+                                <span class="rating-count" style="font-size: 14px;">${product.rating} (${product.reviews} valoraciones)</span>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--color-border);">
+                            <div style="font-size: 36px; font-weight: 700; color: var(--color-primary); margin-bottom: 8px;">
+                                $${product.price.toFixed(2)} <span style="font-size: 18px; font-weight: 400; color: var(--color-text-light);">USD</span>
+                            </div>
+                            ${product.delivery ? `
+                                <div style="color: var(--color-success); font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 16v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4"></path><polyline points="7 12 12 17 17 12"></polyline><line x1="12" y1="17" x2="12" y2="3"></line></svg>
+                                    ${product.delivery}
+                                </div>
+                            ` : ''}
+                        </div>
+                        
+                        <div style="margin-bottom: 24px;">
+                            <label style="display: block; margin-bottom: 12px; font-weight: 600; font-size: 15px;">Cantidad</label>
+                            <div style="display: flex; align-items: center; gap: 12px;">
+                                <button onclick="changeQuantity(-1)" style="width: 36px; height: 36px; border: 1px solid var(--color-border); background: white; border-radius: 8px; cursor: pointer; font-size: 18px; font-weight: 600;">−</button>
+                                <input type="number" id="productQuantity" value="1" min="1" style="width: 60px; padding: 8px; text-align: center; border: 1px solid var(--color-border); border-radius: 8px; font-size: 16px; font-weight: 600;">
+                                <button onclick="changeQuantity(1)" style="width: 36px; height: 36px; border: 1px solid var(--color-border); background: white; border-radius: 8px; cursor: pointer; font-size: 18px; font-weight: 600;">+</button>
+                                <span style="color: var(--color-text-light); font-size: 13px; margin-left: 8px;">(${Math.floor(Math.random() * 50) + 10} disponibles)</span>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 12px; margin-bottom: 32px;">
+                            <button class="btn btn-primary" style="flex: 1; padding: 14px; font-size: 16px; border-radius: 12px;" onclick="addToCartFromDetail(${product.id})">
+                                🛒 Agregar al Carrito
+                            </button>
+                            <button class="btn-icon" style="width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center;" title="Favoritos">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                            </button>
+                        </div>
+                        
+                        <div style="background-color: var(--color-accent-light); padding: 20px; border-radius: 12px; margin-bottom: 24px;">
+                            <h3 style="font-size: 16px; margin-bottom: 12px; color: var(--color-primary);">✓ Detalles de Envío</h3>
+                            <ul style="margin: 0; padding-left: 20px; color: var(--color-text); line-height: 1.8;">
+                                <li>Envío GRATIS en pedidos superiores a $50</li>
+                                <li>Devoluciones gratuitas dentro de 30 días</li>
+                                <li>Garantía del vendedor: 12 meses</li>
+                                <li>Pago seguro con encriptación SSL</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tabs Section -->
+                <div style="margin-top: 32px; border-top: 1px solid var(--color-border); padding-top: 24px;">
+                    <div style="display: flex; gap: 24px; margin-bottom: 24px; border-bottom: 2px solid var(--color-border);">
+                        <button onclick="showTab('description')" id="tabDescription" style="padding: 12px 24px; background: none; border: none; border-bottom: 3px solid var(--color-accent); cursor: pointer; font-weight: 600; color: var(--color-accent); font-size: 15px;">Descripción</button>
+                        <button onclick="showTab('specifications')" id="tabSpecifications" style="padding: 12px 24px; background: none; border: none; border-bottom: 3px solid transparent; cursor: pointer; font-weight: 600; color: var(--color-text-light); font-size: 15px;">Especificaciones</button>
+                        <button onclick="showTab('reviews')" id="tabReviews" style="padding: 12px 24px; background: none; border: none; border-bottom: 3px solid transparent; cursor: pointer; font-weight: 600; color: var(--color-text-light); font-size: 15px;">Reseñas (${product.reviews})</button>
+                    </div>
+                    
+                    <div id="tabContent">
+                        <div id="contentDescription">
+                            <h3 style="font-size: 18px; margin-bottom: 16px; color: var(--color-primary);">Descripción del Producto</h3>
+                            <p style="line-height: 1.8; color: var(--color-text); margin-bottom: 16px;">
+                                ${product.description || product.title + ' es un producto de alta calidad diseñado para satisfacer todas tus necesidades. Fabricado con materiales premium y tecnología de punta, este producto ofrece un rendimiento excepcional y durabilidad garantizada.'}
+                            </p>
+                            <p style="line-height: 1.8; color: var(--color-text); margin-bottom: 16px;">
+                                <strong>Lo que incluye:</strong>
+                            </p>
+                            <ul style="margin: 0; padding-left: 20px; color: var(--color-text); line-height: 1.8;">
+                                <li>Producto original con embalaje sellado de fábrica</li>
+                                <li>Manual de usuario en español e inglés</li>
+                                <li>Cable y accesorios necesarios incluidos</li>
+                                <li>Garantía oficial del fabricante</li>
+                                <li>Soporte técnico 24/7 en español</li>
+                                <li>Factura electrónica válida para devoluciones y garantías</li>
+                            </ul>
+                        </div>
+                        
+                        <div id="contentSpecifications" style="display: none;">
+                            <h3 style="font-size: 18px; margin-bottom: 16px; color: var(--color-primary);">Especificaciones Técnicas</h3>
+                            <table style="width: 100%; border-collapse: collapse;">
+                                ${product.specifications ? Object.entries(product.specifications).map(([key, value]) => `
+                                    <tr style="border-bottom: 1px solid var(--color-border);">
+                                        <td style="padding: 12px 0; font-weight: 600; width: 40%;">${key}</td>
+                                        <td style="padding: 12px 0; color: var(--color-text-light);">${value}</td>
+                                    </tr>
+                                `).join('') : `
+                                    <tr style="border-bottom: 1px solid var(--color-border);">
+                                        <td style="padding: 12px 0; font-weight: 600; width: 40%;">Categoría</td>
+                                        <td style="padding: 12px 0; color: var(--color-text-light);">${product.category.charAt(0).toUpperCase() + product.category.slice(1)}</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--color-border);">
+                                        <td style="padding: 12px 0; font-weight: 600;">Vendedor</td>
+                                        <td style="padding: 12px 0; color: var(--color-text-light);">${product.seller}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 12px 0; font-weight: 600;">Garantía</td>
+                                        <td style="padding: 12px 0; color: var(--color-text-light);">12 meses</td>
+                                    </tr>
+                                `}
+                            </table>
+                        </div>
+                        
+                        <div id="contentReviews" style="display: none;">
+                            <h3 style="font-size: 18px; margin-bottom: 16px; color: var(--color-primary);">Reseñas de Clientes</h3>
+                            <div style="background-color: var(--color-background); padding: 20px; border-radius: 12px; margin-bottom: 16px;">
+                                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                                    <div>
+                                        <div style="font-weight: 600; margin-bottom: 4px;">Juan Pérez</div>
+                                        <div style="color: var(--color-warning); font-size: 14px; margin-bottom: 8px;">⭐⭐⭐⭐⭐</div>
+                                    </div>
+                                    <div style="font-size: 13px; color: var(--color-text-light);">Hace 2 días</div>
+                                </div>
+                                <p style="color: var(--color-text); line-height: 1.6; margin: 0;">
+                                    Excelente producto, llegó en perfectas condiciones y mucho antes de lo esperado. 
+                                    La calidad es excepcional y cumple con todas mis expectativas. ¡Totalmente recomendado!
+                                </p>
+                            </div>
+                            
+                            <div style="background-color: var(--color-background); padding: 20px; border-radius: 12px; margin-bottom: 16px;">
+                                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                                    <div>
+                                        <div style="font-weight: 600; margin-bottom: 4px;">María González</div>
+                                        <div style="color: var(--color-warning); font-size: 14px; margin-bottom: 8px;">⭐⭐⭐⭐⭐</div>
+                                    </div>
+                                    <div style="font-size: 13px; color: var(--color-text-light);">Hace 1 semana</div>
+                                </div>
+                                <p style="color: var(--color-text); line-height: 1.6; margin: 0;">
+                                    Me encantó! La relación calidad-precio es increíble. El vendedor fue muy atento 
+                                    y respondió todas mis preguntas rápidamente. Sin duda volveré a comprar.
+                                </p>
+                            </div>
+                            
+                            <div style="background-color: var(--color-background); padding: 20px; border-radius: 12px;">
+                                <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px;">
+                                    <div>
+                                        <div style="font-weight: 600; margin-bottom: 4px;">Carlos Rodríguez</div>
+                                        <div style="color: var(--color-warning); font-size: 14px; margin-bottom: 8px;">⭐⭐⭐⭐</div>
+                                    </div>
+                                    <div style="font-size: 13px; color: var(--color-text-light);">Hace 2 semanas</div>
+                                </div>
+                                <p style="color: var(--color-text); line-height: 1.6; margin: 0;">
+                                    Muy buen producto. Cumple con lo descrito aunque el envío tardó un poco más de lo esperado. 
+                                    En general estoy satisfecho con la compra.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('productDetailModal').classList.add('active');
+        }
+
+        // Tab switching function
+        function showTab(tabName) {
+            // Hide all content
+            document.getElementById('contentDescription').style.display = 'none';
+            document.getElementById('contentSpecifications').style.display = 'none';
+            document.getElementById('contentReviews').style.display = 'none';
+            
+            // Reset all tab buttons
+            document.getElementById('tabDescription').style.borderBottom = '3px solid transparent';
+            document.getElementById('tabDescription').style.color = 'var(--color-text-light)';
+            document.getElementById('tabSpecifications').style.borderBottom = '3px solid transparent';
+            document.getElementById('tabSpecifications').style.color = 'var(--color-text-light)';
+            document.getElementById('tabReviews').style.borderBottom = '3px solid transparent';
+            document.getElementById('tabReviews').style.color = 'var(--color-text-light)';
+            
+            // Show selected content and highlight tab
+            if (tabName === 'description') {
+                document.getElementById('contentDescription').style.display = 'block';
+                document.getElementById('tabDescription').style.borderBottom = '3px solid var(--color-accent)';
+                document.getElementById('tabDescription').style.color = 'var(--color-accent)';
+            } else if (tabName === 'specifications') {
+                document.getElementById('contentSpecifications').style.display = 'block';
+                document.getElementById('tabSpecifications').style.borderBottom = '3px solid var(--color-accent)';
+                document.getElementById('tabSpecifications').style.color = 'var(--color-accent)';
+            } else if (tabName === 'reviews') {
+                document.getElementById('contentReviews').style.display = 'block';
+                document.getElementById('tabReviews').style.borderBottom = '3px solid var(--color-accent)';
+                document.getElementById('tabReviews').style.color = 'var(--color-accent)';
+            }
+        }
+
+        // Change quantity
+        function changeQuantity(delta) {
+            const input = document.getElementById('productQuantity');
+            const currentValue = parseInt(input.value) || 1;
+            const newValue = Math.max(1, currentValue + delta);
+            input.value = newValue;
+        }
+
+        // Add to cart from detail view
+        function addToCartFromDetail(productId) {
+            const quantity = parseInt(document.getElementById('productQuantity').value) || 1;
+            const product = allProducts.find(p => p.id === productId);
+            
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += quantity;
+            } else {
+                cart.push({ ...product, quantity: quantity });
+            }
+            
+            updateCartCount();
+            
+            // Show feedback
+            alert(`${quantity} x ${product.title} agregado al carrito`);
+            closeModal('productDetailModal');
+        }
+
+        // Show recommended products based on search history
+        function showRecommended() {
+            document.getElementById('recommendedModal').classList.add('active');
+            
+            let recommendedProducts = [];
+            
+            if (userSearchHistory.length === 0) {
+                // Default recommendations
+                recommendedProducts = allProducts.slice(0, 8);
+            } else {
+                // Get products matching user's search history
+                userSearchHistory.forEach(search => {
+                    const matching = allProducts.filter(product => 
+                        product.category.includes(search) ||
+                        product.title.toLowerCase().includes(search) ||
+                        product.seller.toLowerCase().includes(search)
+                    );
+                    recommendedProducts.push(...matching);
+                });
+                
+                // Remove duplicates and limit to 12
+                recommendedProducts = [...new Set(recommendedProducts)].slice(0, 12);
+                
+                // If still not enough, add random products
+                if (recommendedProducts.length < 8) {
+                    const remaining = allProducts.filter(p => !recommendedProducts.includes(p));
+                    recommendedProducts.push(...remaining.slice(0, 8 - recommendedProducts.length));
+                }
+            }
+            
+            renderRecommended(recommendedProducts);
+        }
+
+        // Render recommended products
+        function renderRecommended(products) {
+            const grid = document.getElementById('recommendedGrid');
+            
+            grid.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <div class="product-image">
+                        ${product.image ? `<img src="${product.image}" alt="${product.title}">` : product.icon}
+                        ${product.badge ? `<div class="product-badge">${product.badge}</div>` : ''}
+                    </div>
+                    <div class="product-info">
+                        <div class="product-seller">${product.seller}</div>
+                        <div class="product-title">${product.title}</div>
+                        <div class="product-rating">
+                            <span class="stars">${'⭐'.repeat(Math.floor(product.rating))}</span>
+                            <span class="rating-count">(${product.reviews})</span>
+                        </div>
+                        <div class="product-price">
+                            $${product.price.toFixed(2)}
+                            <small>USD</small>
+                        </div>
+                        ${product.delivery ? `<div style="color: var(--color-success); font-size: 13px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 16v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4"></path><polyline points="7 12 12 17 17 12"></polyline><line x1="12" y1="17" x2="12" y2="3"></line></svg>
+                            ${product.delivery}</div>` : ''}
+                        <div class="product-actions">
+                            <button class="btn-add-cart" onclick="addToCart(${product.id})">Agregar al Carrito</button>
+                            <button class="btn-icon" title="Favoritos">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
+
